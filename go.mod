@@ -1,4 +1,4 @@
-module github.com/go-gsm/ucp
+module github.com/sboli/ucp
 
 require (
 	github.com/go-gsm/charset v1.0.0
