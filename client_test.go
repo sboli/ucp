@@ -55,7 +55,7 @@ func TestSend(t *testing.T) {
 		fmt.Println("cant send ack")
 	}
 
-	ids, err := client.Send("test", "09191234567", "hello world")
+	ids, err := client.Send("test", oAdCAlphaNum, "09191234567", "hello world")
 	expectedIds := []string{"09191234567:110917173639"}
 	expectedBytesWritten := []byte("\x0200/00120/O/51/09191234567/08F4F29C0E//1//1/////////////3/88/68656C6C6F20776F726C64////1////5039//020100060101070101///B7\x03")
 	actualBytesWritten := buf.Bytes()

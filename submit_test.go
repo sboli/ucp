@@ -9,7 +9,7 @@ import (
 )
 
 func TestSubmit(t *testing.T) {
-	actual := encodeMessage([]byte("01"), "Voyager", "09495696599", "Hello world",
+	actual := encodeMessage([]byte("01"), "Voyager", oAdCAlphaNum, "09495696599", "Hello world",
 		alphaNumericMessage, "", 23, 1, 1)
 	data := struct {
 		actual   []byte
@@ -153,7 +153,7 @@ func BenchmarkEnodeMsg(b *testing.B) {
 	receiver := "09191234567"
 
 	for n := 0; n < b.N; n++ {
-		encodeMessage([]byte("01"), sender, receiver, message, alphaNumericMessage,
+		encodeMessage([]byte("01"), sender, oAdCAlphaNum, receiver, message, alphaNumericMessage,
 			"", 23, 1, 1)
 	}
 }

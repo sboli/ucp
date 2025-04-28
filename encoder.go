@@ -124,10 +124,13 @@ func maskSender(sender string) string {
 }
 
 // encodeMessage builds a submit sm packet
-func encodeMessage(transRefNum []byte, sender, receiver, message, messageType, billingID string,
+func encodeMessage(transRefNum []byte, sender string, senderTypeOTOA string, receiver, message, messageType, billingID string,
 	referenceNum, msgPartNum, totalMsgParts int) []byte {
 
-	encodedHexSender := maskSender(sender)
+	encodedHexSender := sender
+	if senderTypeOTOA == oAdCAlphaNum {
+		encodedHexSender = maskSender(sender)
+	}
 	encodedHexMessage := buildHexMsg(messageType, message)
 	numBits := strconv.Itoa(len(encodedHexMessage) * 4)
 	xserData := buildXser(billingID, messageType, referenceNum, totalMsgParts, msgPartNum)
@@ -141,7 +144,7 @@ func encodeMessage(transRefNum []byte, sender, receiver, message, messageType, b
 		NB:   []byte(numBits),
 		Msg:  []byte(encodedHexMessage),
 		MCLs: []byte(messageClass),
-		OTOA: []byte(oAdCAlphaNum),
+		OTOA: []byte(senderTypeOTOA),
 		Xser: []byte(xserData),
 	}
 

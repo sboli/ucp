@@ -198,7 +198,7 @@ func (c *Client) ShortMessageHandler(handler Handler) {
 
 // Send will send the message to the receiver with a sender mask.
 // It returns a list of message IDs from the SMSC.
-func (c *Client) Send(sender, receiver, message string) ([]string, error) {
+func (c *Client) Send(sender, senderTypeOTOA, receiver, message string) ([]string, error) {
 	c.muconn.Lock()
 	defer c.muconn.Unlock()
 
@@ -208,7 +208,7 @@ func (c *Client) Send(sender, receiver, message string) ([]string, error) {
 	ids := make([]string, len(msgParts))
 	c.rateLimiter.SetLimit(rate.Limit(c.GetTps()))
 	for i := 0; i < len(msgParts); i++ {
-		sendPacket := encodeMessage(c.nextRefNum(), sender, receiver, msgParts[i], msgType,
+		sendPacket := encodeMessage(c.nextRefNum(), sender, senderTypeOTOA, receiver, msgParts[i], msgType,
 			c.GetBillingID(), refNum, i+1, len(msgParts))
 		c.rateLimiter.Wait(context.Background())
 		c.Printf("sendPacket: %q\n", sendPacket)
