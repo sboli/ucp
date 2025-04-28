@@ -13,6 +13,11 @@ import (
 	"golang.org/x/time/rate"
 )
 
+var (
+	SenderTypeAlphanumeric = oAdCAlphaNum
+	SenderTypeShortCode    = ""
+)
+
 // Client represents a UCP client connection.
 type Client struct {
 	// addr represents the ip:port address of the SMSC.
